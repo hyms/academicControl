@@ -15,13 +15,13 @@ class user(models.Model):
     username = models.CharField(max_length=128)
     password = models.CharField(max_length=128)
     tipo = models.CharField(max_length=15)
-    idRelacion = models.ForeignKey(user, blank=True)
+#    idRelacion = models.ForeignKey(user, blank=True)
 
 class carrera(models.Model):
     nombre = models.CharField(max_length=100)
     fechaCreacion = models.DateField('Fecha de Creacion')
     cantSemestres = models.IntegerField('Cantidad de Semestres' , blank=True)
-    cantAnios = models.IntegerField('Cantidad de Años')
+    cantAnios = models.IntegerField('Cantidad de Anios')
     descripcion = models.CharField(max_length=500)
 
 class materia(models.Model):
@@ -29,10 +29,16 @@ class materia(models.Model):
     nombre = models.CharField(max_length=100)
     fechaCreacion = models.DateField('Fecha de Creacion')
     idCarrera = models.ForeignKey(carrera)
-    idPresedente = models.ForeignKey(materia , blank=True)
     semestre = models.IntegerField('Cantidad de Semestres' , blank=True)
-    anio = models.IntegerField('Año')
+    anio = models.IntegerField('Anio')
+#    idPresedente = models.ForeignKey(materia , blank=True)
 
+class horario(models.Model):
+    turno = models.IntegerField('Turno')
+    periodo = models.IntegerField('Periodo')
+    duracion = models.IntegerField('Duracion (mins)')
+    idMateria = models.ForeignKey(materia)
+    
 class asignar(models.Model):
     idUser = models.ForeignKey(user)
     idHorario = models.ForeignKey(horario)
@@ -43,16 +49,10 @@ class notas(models.Model):
     fecha = models.DateField()
     idAlumno = models.ForeignKey(user)
     idMateria = models.ForeignKey(materia)
-    obs = models.CharField(max_length=100)
-
-class horario(models.Model):
-    turno = models.IntegerField('Turno')
-    periodo = models.IntegerField('Turno')
-    duracion = models.IntegerField('Turno')
-    idMateria = models.ForeignKey(materia)
+    obs = models.CharField(max_length=100, blank=True)
 
 class transaccion(models.Model):
-    monto = models.DecimalField('Monto')
+    monto = models.FloatField('Monto')
     tipo = models.IntegerField('Tipo')
     idUser = models.ForeignKey(user)
-    obs = models.CharField(max_length=100)
+    obs = models.CharField(max_length=100, blank=True)
