@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Lista de Usuarios</title>
+</head>
+<body>
+	<h1>Lista de Usuarios</h1>
+	{% for usuario in lista %}
+	<ul>
+		<li>{{usuario.nombre}}</li>
+		<li>{{usuario.apPaterno}}</li>
+	</ul>
+	{% endfor %}
+</body>
+</html>

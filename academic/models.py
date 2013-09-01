@@ -24,6 +24,9 @@ class user(models.Model):
     password = models.CharField(max_length=128)
     tipo = models.CharField(max_length=2, choices=TIPO_CHOICE)
     idRelacion = models.ForeignKey('self', blank=True, null=True)
+    
+    def __unicode__(self):
+        return self.nombre
 
 class carrera(models.Model):
     nombre = models.CharField(max_length=100)
@@ -31,6 +34,8 @@ class carrera(models.Model):
     cantSemestres = models.PositiveSmallIntegerField('Cantidad de Semestres' , blank=True, null=True)
     cantAnios = models.IntegerField('Cantidad de Años')
     descripcion = models.CharField(max_length=500)
+    def __unicode__(self):
+        return self.nombre
 
 class materia(models.Model):
     codigoMateria = models.CharField(max_length=6)
@@ -40,17 +45,23 @@ class materia(models.Model):
     anio = models.PositiveSmallIntegerField('Año')
     idCarrera = models.ForeignKey(carrera)
     idPresedente = models.ForeignKey('self' , blank=True, null=True)
+    def __unicode__(self):
+        return self.nombre
 
 class horario(models.Model):
     turno = models.PositiveSmallIntegerField('Turno')
     periodo = models.PositiveSmallIntegerField('Periodo')
     duracion = models.IntegerField('Duración (mins)')
     idMateria = models.ForeignKey(materia)
+    def __unicode__(self):
+        return self.turno
     
 class asignar(models.Model):
     idUser = models.ForeignKey(user)
     idHorario = models.ForeignKey(horario)
     fecha = models.DateField('Fecha de asignación')
+    def __unicode__(self):
+        return self.fecha
 
 class notas(models.Model):
     nota = models.PositiveSmallIntegerField('Nota')
@@ -58,6 +69,8 @@ class notas(models.Model):
     idAlumno = models.ForeignKey(user)
     idMateria = models.ForeignKey(materia)
     obs = models.CharField(max_length=100, blank=True, null=True)
+    def __unicode__(self):
+        return self.nota
 
 class transaccion(models.Model):
     TIPO_MONEY_CHOICE =(
@@ -71,3 +84,5 @@ class transaccion(models.Model):
     tipo = models.IntegerField('Tipo',choices=TIPO_MONEY_CHOICE)
     idUser = models.ForeignKey(user)
     obs = models.CharField(max_length=100, blank=True, null=True)
+    def __unicode__(self):
+        return self.monto
